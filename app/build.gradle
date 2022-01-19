@@ -1,0 +1,42 @@
+/*
+ * This file defines dependences and default main-class for the application
+ */
+
+plugins {
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'application'
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+
+    // Use JUnit test framework.
+    testImplementation 'junit:junit:4.13.1'
+
+    // This dependency is used by the application.
+    implementation 'com.google.guava:guava:30.0-jre'
+
+    // Use mysql connector
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.25'
+    
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'hms.App'
+}
+
+// Defining default main-class and class-path to run jar
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'hms.App',
+            'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' ')
+        )
+    }
+}
